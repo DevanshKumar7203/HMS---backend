@@ -13,7 +13,7 @@ app.use(cookieParser())
 
 app.use(cors(
     {
-    origin: "https://hms-frontend-drab-nine.vercel.app",
+    origin: "https://hms-frontend-five-phi.vercel.app",
     credentials: true
   }
 ))
