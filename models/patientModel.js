@@ -1,62 +1,74 @@
 import mongoose from "mongoose";
 
-
-const patientSchema =  new mongoose.Schema({
-    name : {
-        type : String,
-        trim : true,
-        required : [true, "Name is required"]
+const patientSchema = new mongoose.Schema(
+  {
+    // ✅ Patient Name
+    name: {
+      type: String,
+      trim: true,
+      required: [true, "Name is required"],
     },
 
-    age : {
-        type : Number,
-        required : true
-    },
-    email: {
-        type: String,
-        required: true,
-        lowercase: true,
-      },
-
-    phoneNo : {
-        type : String,
-        trim : true,
-        unique : true,
-      match: [/^\d{10}$/, "Phone number must be 10 digits"]
+    // ✅ Age
+    age: {
+      type: Number,
+      required: [true, "Age is required"],
     },
 
-    gender : {
-        type : String,
-        enum : ["Male", "Female", "Others"],
-        required : true
+    // ✅ Phone Number
+    phoneNo: {
+      type: String,
+      trim: true,
+      unique: true,
+      required: [true, "Phone number is required"],
+      match: [/^\d{10}$/, "Phone number must be 10 digits"],
     },
 
-    disease : {
-        type : String,
-        required : true,
+    // ✅ Gender
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Others"],
+      required: [true, "Gender is required"],
     },
 
-    admittedDate : {
-        type : Date,
-        default : Date.now
+    // ✅ Disease
+    disease: {
+      type: String,
+      trim: true,
+      required: [true, "Disease is required"],
     },
 
+    // ✅ Admission Date
+    admittedDate: {
+      type: Date,
+      default: Date.now,
+    },
+
+    // ✅ Assigned Doctor
     doctorAssigned: {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Doctor",
-        required : true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Doctor",
+      required: true,
     },
-    createdBy : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "User"
-    }
 
-},
-{
-    timestamps : true
-}
-)
+    // ✅ Actual Patient User Account
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 
+    // ✅ Who Created Record (ADMIN/DOCTOR)
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const Patient = new mongoose.model('Patient', patientSchema)
-export default Patient
+const Patient = mongoose.model("Patient", patientSchema);
+
+export default Patient;
